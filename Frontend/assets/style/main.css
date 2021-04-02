@@ -58,3 +58,12 @@
     color: #fff;
     transform: scale(0.91);
 }
+/*ProductPage*/
+.btn-outline-secondary {
+    background-color: #a064cd;
+    color:#fff;
+}
+.btn-outline-secondary:hover {
+    background-color: #a064cd;
+    transform: scale(1.05);
+}
