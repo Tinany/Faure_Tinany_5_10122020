@@ -24,7 +24,7 @@
     color: #a064cd;
     font-weight: 700;
 }
-.nav-link:hover {
+.nav-link:hover, .nav-link:focus {
     width: fit-content;
     color: #a064cd;
     border-bottom: #a064cd 2px solid;
@@ -66,4 +66,8 @@
 .btn-outline-secondary:hover {
     background-color: #a064cd;
     transform: scale(1.05);
+}
+/*Focus*/
+.focus:focus{
+    transform: scale(1.07);
 }
