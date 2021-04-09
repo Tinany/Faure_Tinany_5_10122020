@@ -22,7 +22,7 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                             <div class="card-text mt-5">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <button class="btn btn-outline-secondary" type="button">Ajouter au panier</button>
+                                            <button id="cartButton" class="btn btn-outline-secondary" type="button">Ajouter au panier</button>
                                     </div>
                                     <select class="choose custom-select" id="inputGroupSelect03"></select>
                                 </div>
@@ -43,5 +43,11 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
             option.textContent = colors; //Add text inside option tag
             colorsChoices.appendChild(option);
         })
+        
+    let cartButton = document.getElementById("cartButton");
+    cartButton.addEventListener("click", function(){
+        alert("work");
+    });
+    
     })
     .catch(error => console.log(error));

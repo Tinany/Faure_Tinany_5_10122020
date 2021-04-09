@@ -23,8 +23,8 @@ fetch('http://localhost:3000/api/teddies') // Retrieving data from the API
                                 <div class="card-text mt-5">
                                     <p class="h4 text-right">${(response[i].price / 100).toFixed(2).replace(".", ",")}€</p>
                                     <a class="card-link" href="../Frontend/pages/productPage.html?ourson=${response[i]._id}">
-                                    <button class="btn btn-product color-tertiary" type="button">Voir l'article</button>
-                                </a>
+                                        <button class="btn btn-product color-tertiary" type="button">Voir l'article</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>`
