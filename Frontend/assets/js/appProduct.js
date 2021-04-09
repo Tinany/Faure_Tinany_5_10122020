@@ -22,7 +22,7 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                             <div class="card-text mt-5">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                            <button id="cartButton" class="btn btn-outline-secondary" type="button">Ajouter au panier</button>
+                                            <button id="cartButton" class="btn btn-outline-secondary addCart" type="button">Ajouter au panier</button>
                                     </div>
                                     <select class="choose custom-select" id="inputGroupSelect03"></select>
                                 </div>
@@ -30,24 +30,37 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                             </div>
                         </div>
                       </div>
-                      `;
+                      `
 
 
         //Creating a foreach function 
-        let colorsChoices = document.querySelector(".choose");
+        let colorsChoices = document.querySelector(".choose")
 
         response.colors.forEach(function (colors) {
 
-            let option = document.createElement("option");
+            let option = document.createElement("option")
             option.value = colors; //Add option value=""
             option.textContent = colors; //Add text inside option tag
-            colorsChoices.appendChild(option);
+            colorsChoices.appendChild(option)
         })
-        
-    let cartButton = document.getElementById("cartButton");
-    cartButton.addEventListener("click", function(){
-        alert("work");
-    });
-    
+
+
+        // Add product data in localStorage
+        document.getElementById("cartButton").addEventListener('click', function () {
+                let select = document.querySelector(".choose")
+                response.colorChose = select.options[select.selectedIndex].value
+
+            if (typeof localStorage != 'undefined' && JSON) {
+                let cart = {
+                    productImage: response.imageUrl,
+                    productId: response._id,
+                    productName: response.name,
+                    productColor: response.colorChose,
+                    productPrice: (response.price / 100).toFixed(2).replace(".", ","),
+                    productQuantity: 1
+                }
+                localStorage.setItem("product", JSON.stringify(cart))
+            }
+        })
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log(error))
