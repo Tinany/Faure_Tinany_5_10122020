@@ -1,5 +1,5 @@
-const searchParams = new URLSearchParams(window.location.search);
-const productId = searchParams.get("ourson");
+const searchParams = new URLSearchParams(window.location.search)
+const productId = searchParams.get("ourson")
 
 fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from the API with product ID
     .then((response) => {
@@ -45,11 +45,15 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
         })
 
 
-        // Add product data in localStorage
+        // Color choice for localStorage
         document.getElementById("cartButton").addEventListener('click', function () {
                 let select = document.querySelector(".choose")
                 response.colorChose = select.options[select.selectedIndex].value
 
+                // Create an array
+                let cartProducts = []
+
+            // Add product data for localStorage
             if (typeof localStorage != 'undefined' && JSON) {
                 let cart = {
                     productImage: response.imageUrl,
@@ -59,7 +63,29 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                     productPrice: (response.price / 100).toFixed(2).replace(".", ","),
                     productQuantity: 1
                 }
-                localStorage.setItem("product", JSON.stringify(cart))
+                // Create a bolean 
+                let other = true
+
+                // When the localStorage is empty
+                if (localStorage.getItem('item') === null) {
+                    cartProducts.push(cart)
+                    localStorage.setItem('item', JSON.stringify(cartProducts))
+                }
+                // When isn't empty
+                else {
+                    cartProducts = JSON.parse(localStorage.getItem('item'))
+                
+                    // Add a quantity 
+                    cartProducts.forEach((items) => {
+                        if (response._id === items._id && response.colorChose === items.productColor) {
+                            items.productQuantity++
+                            other = false
+                        }
+                    })
+    
+                    if (other) cartProducts.push(cart)
+                    localStorage.setItem('item', JSON.stringify(cartProducts))
+                }
             }
         })
     })

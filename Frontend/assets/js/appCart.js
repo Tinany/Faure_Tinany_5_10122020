@@ -1,5 +1,3 @@
-// Cart
-console.log(JSON.parse(localStorage.getItem('product')))
 // Form
 document.getElementById("form").innerHTML += `<form class="mb-4 col-12 needs-validation" novalidate>
                                                 <div class="form-row">
@@ -64,4 +62,4 @@ document.getElementById("form").innerHTML += `<form class="mb-4 col-12 needs-val
                 form.classList.add('was-validated')
             }, false)
         })
-})();
+})()
