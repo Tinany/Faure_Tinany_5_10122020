@@ -63,7 +63,8 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                     productPrice: (response.price / 100).toFixed(2).replace(".", ","),
                     productQuantity: 1
                 }
-                // Create a bolean 
+
+                // Create a bolean variable
                 let other = true
 
                 // When the localStorage is empty
@@ -74,15 +75,15 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                 // When isn't empty
                 else {
                     cartProducts = JSON.parse(localStorage.getItem('item'))
-                
-                    // Add a quantity 
+                    
+                    // ID & color verification
                     cartProducts.forEach((items) => {
-                        if (response._id === items._id && response.colorChose === items.productColor) {
+
+                        if (cart.productId === items.productId && cart.productColor === items.productColor) {
                             items.productQuantity++
-                            other = false
+                            other= false
                         }
                     })
-    
                     if (other) cartProducts.push(cart)
                     localStorage.setItem('item', JSON.stringify(cartProducts))
                 }
