@@ -14,8 +14,8 @@ fetch('http://localhost:3000/api/teddies') // Retrieving data from the API
         for (let i = 0; i < response.length; i++) {
 
             // HTML semantics creation with the API elements and add new elements in HTML document
-            document.getElementById("homePageContent").innerHTML += `<div class="card mx-auto mt-5">
-                            <img class="card-img-top" src="${response[i].imageUrl}" alt="Photos d'ours en peluche"/>
+            document.getElementById("homePageContent").innerHTML += `<div class="card card-home mx-auto mt-5">
+                            <img class="card-img-top card-img-top-home" src="${response[i].imageUrl}" alt="Photos d'ours en peluche"/>
 
                             <div class="card-body">
                                 <h3 class="card-title text-center mb-4">${response[i].name}</h3>

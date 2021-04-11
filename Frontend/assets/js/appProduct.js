@@ -13,8 +13,8 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
     .then(response => {
 
         // HTML semantics creation with the API elements and add new elements in HTML document
-        document.getElementById("productPageContent").innerHTML += `<div class="card mx-auto mt-5 mb-5"> 
-                        <img class="card-img-top" src="${response.imageUrl}" alt="Photos d'ours en peluche"/>
+        document.getElementById("productPageContent").innerHTML += `<div class="card card-product mx-auto mt-5 mb-5"> 
+                        <img class="card-img-top card-img-top-product" src="${response.imageUrl}" alt="Photos d'ours en peluche"/>
                         
                         <div class="card-body">
                             <h3 class="card-title text-center mb-4">${response.name}</h3>

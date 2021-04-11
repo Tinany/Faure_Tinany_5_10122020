@@ -33,12 +33,12 @@
     color: #a064cd;
 }
 /*Homepage Card*/
-.card {
-    width: 50rem;
+.card-home {
+    width: 23rem;
 }
-.card-img-top {
+.card-img-top-home {
     width: 100%;
-    height: 35vw;
+    height: 25vw;
     object-fit: cover;
 }
 .card-title {
@@ -59,6 +59,14 @@
     transform: scale(0.91);
 }
 /*ProductPage*/
+.card-product {
+    width: 50rem;
+}
+.card-img-top-product {
+    width: 100%;
+    height: 35vw;
+    object-fit: cover;
+}
 .btn-outline-secondary {
     background-color: #a064cd;
     color:#fff;
