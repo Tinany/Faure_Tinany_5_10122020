@@ -71,3 +71,7 @@
 .focus:focus{
     transform: scale(1.07);
 }
+/*Cart*/
+.imgForCart {
+    width: 120px;
+}

@@ -1,3 +1,38 @@
+// Cart
+document.getElementById("cart").innerHTML += `<table class="mt-4 mb-4 table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Image</th>
+                                                        <th scope="col">Nom</th>
+                                                        <th scope="col">Couleur</th>
+                                                        <th scope="col">Quantité</th>
+                                                        <th scope="col">Prix</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="products-detail">
+                                                </tbody>
+                                              </table>`
+
+if (localStorage.getItem('item') !== null) {
+
+    let addProduct = JSON.parse(localStorage.getItem('item'))
+
+    addProduct.forEach((product) => {
+        document.getElementById("products-detail").innerHTML += `<tr>
+                                                                    <td><img class ="imgForCart" src="${product.productImage}" alt="Photo d'un ours en peluche"></td>
+                                                                    <td>${product.productName}</td>
+                                                                    <td>${product.productColor}</td>
+                                                                    <td>${product.productQuantity}</td>
+                                                                    <td>${product.productPrice}</td>
+                                                                  </tr>`
+    })
+    
+} else {
+
+    alert('Votre panier est vide !')
+
+}
+
 // Form
 document.getElementById("form").innerHTML += `<form class="mb-4 col-12 needs-validation" novalidate>
                                                 <div class="form-row">
