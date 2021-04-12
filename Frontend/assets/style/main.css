@@ -83,3 +83,9 @@
 .imgForCart {
     width: 120px;
 }
+.totalText, .totalPrice {
+    padding-top: 30px!important;
+}
+.totalPrice {
+    font-weight: 700;
+}

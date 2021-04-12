@@ -1,35 +1,61 @@
 // Cart
-document.getElementById("cart").innerHTML += `<table class="mt-4 mb-4 table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Image</th>
-                                                        <th scope="col">Nom</th>
-                                                        <th scope="col">Couleur</th>
-                                                        <th scope="col">Quantité</th>
-                                                        <th scope="col">Prix</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="products-detail">
-                                                </tbody>
-                                              </table>`
+let createTable = document.getElementById("cart") // Create the table
 
-if (localStorage.getItem('item') !== null) {
+createTable.innerHTML += `<table class="mt-4 mb-4 table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Image</th>
+                                                    <th scope="col">Nom</th>
+                                                    <th scope="col">Couleur</th>
+                                                    <th scope="col">Quantité</th>
+                                                    <th scope="col">Prix</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="products-detail">
+                                            </tbody>
+                                            <tfoot id="total"></tfoot>
+                                          </table>`
 
-    let addProduct = JSON.parse(localStorage.getItem('item'))
+if (localStorage.getItem('item') !== null) { // Cart is not empty
+
+    let addProduct = JSON.parse(localStorage.getItem('item')) // Retrieve data
+    let total = 0 
 
     addProduct.forEach((product) => {
+        
+        let price = parseFloat(product.productPrice)
+        total = total + (price * product.productQuantity)
+
         document.getElementById("products-detail").innerHTML += `<tr>
                                                                     <td><img class ="imgForCart" src="${product.productImage}" alt="Photo d'un ours en peluche"></td>
                                                                     <td>${product.productName}</td>
                                                                     <td>${product.productColor}</td>
                                                                     <td>${product.productQuantity}</td>
-                                                                    <td>${product.productPrice}</td>
+                                                                    <td>${price*product.productQuantity}€</td>
+                                                                    <td>
+                                                                        <button class="p-1 btn btn-danger delete">
+                                                                            Supprimer
+                                                                        </button>
+                                                                    </td>
                                                                   </tr>`
     })
-    
-} else {
 
-    alert('Votre panier est vide !')
+    let totalSection = document.getElementById("total") // Total
+
+    totalSection.innerHTML += `<tr class="total">
+                                    <th scope="row" class="totalText">Total</th>
+                                    <td class="totalPrice">${total}€</td>
+                                </tr>`
+
+} else { // Cart is empty
+
+    if (localStorage.getItem('item') === null)  {
+
+        document.getElementById("products-detail").innerHTML += `<tr>
+                                                                    <td>Votre panier est vide !</td>
+                                                                 </tr>`
+    }
 
 }
 
