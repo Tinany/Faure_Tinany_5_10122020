@@ -70,7 +70,6 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                 // When the localStorage is empty
                 if (localStorage.getItem('item') === null) {
                     cartProducts.push(cart)
-                    localStorage.setItem('item', JSON.stringify(cartProducts))
                 }
                 // When isn't empty
                 else {
@@ -85,8 +84,8 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                         }
                     })
                     if (other) cartProducts.push(cart)
-                    localStorage.setItem('item', JSON.stringify(cartProducts))
                 }
+                localStorage.setItem('item', JSON.stringify(cartProducts))
             }
         })
     })

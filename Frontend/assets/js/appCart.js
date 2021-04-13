@@ -20,19 +20,19 @@ createTable.innerHTML += `<table class="mt-4 mb-4 table table-hover">
 if (localStorage.getItem('item') !== null) { // Cart is not empty
 
     let addProduct = JSON.parse(localStorage.getItem('item')) // Retrieve data
-    let total = 0 
+    let total = 0
 
     addProduct.forEach((product) => {
-        
-        let price = parseFloat(product.productPrice)
-        total = total + (price * product.productQuantity)
+
+        let totalProduct = parseFloat(product.productPrice) * product.productQuantity
+        total += totalProduct
 
         document.getElementById("products-detail").innerHTML += `<tr>
                                                                     <td><img class ="imgForCart" src="${product.productImage}" alt="Photo d'un ours en peluche"></td>
                                                                     <td>${product.productName}</td>
                                                                     <td>${product.productColor}</td>
                                                                     <td>${product.productQuantity}</td>
-                                                                    <td>${price*product.productQuantity}€</td>
+                                                                    <td>${totalProduct}€</td>
                                                                     <td>
                                                                         <button class="p-1 btn btn-danger delete">
                                                                             Supprimer
@@ -50,7 +50,7 @@ if (localStorage.getItem('item') !== null) { // Cart is not empty
 
 } else { // Cart is empty
 
-    if (localStorage.getItem('item') === null)  {
+    if (localStorage.getItem('item') === null) {
 
         document.getElementById("products-detail").innerHTML += `<tr>
                                                                     <td>Votre panier est vide !</td>
@@ -60,7 +60,7 @@ if (localStorage.getItem('item') !== null) { // Cart is not empty
 }
 
 // Form
-document.getElementById("form").innerHTML += `<form class="mb-4 col-12 needs-validation" novalidate>
+document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12 needs-validation" novalidate>
                                                 <div class="form-row">
                                                     <div class="col-4">
                                                         <label for="validationCustom01" class="form-label mb-1">Prénom</label>
@@ -108,19 +108,14 @@ document.getElementById("form").innerHTML += `<form class="mb-4 col-12 needs-val
 (function () {
     'use strict' //strict mode
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    let forms = document.querySelectorAll('.needs-validation')
-
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-
-                form.classList.add('was-validated')
-            }, false)
-        })
+    let form = document.querySelector('.needs-validation')
+    form.addEventListener('submit', function (event) {
+        
+        if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+        }
+        console.log(form.checkValidity())
+        form.classList.add('was-validated')
+    }, false)
 })()
