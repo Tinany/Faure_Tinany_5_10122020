@@ -31,10 +31,14 @@ if (localStorage.getItem('item') !== null) { // Cart is not empty
                                                                     <td><img class ="imgForCart" src="${product.productImage}" alt="Photo d'un ours en peluche"></td>
                                                                     <td>${product.productName}</td>
                                                                     <td>${product.productColor}</td>
-                                                                    <td>${product.productQuantity}</td>
+                                                                    <td class="old">
+                                                                        <button class="btn btn-dark decreaseProduct"> - </button>
+                                                                            ${product.productQuantity}
+                                                                        <button class="btn btn-dark increaseProduct"> + </button>
+                                                                    </td>
                                                                     <td>${totalProduct}€</td>
                                                                     <td>
-                                                                        <button class="p-1 btn btn-danger delete">
+                                                                        <button class="p-1 btn btn-primary deleteProduct">
                                                                             Supprimer
                                                                         </button>
                                                                     </td>
@@ -45,7 +49,12 @@ if (localStorage.getItem('item') !== null) { // Cart is not empty
 
     totalSection.innerHTML += `<tr class="total">
                                     <th scope="row" class="totalText">Total</th>
-                                    <td class="totalPrice">${total}€</td>
+                                    <td colspan="4" class="totalPrice">${total}€</td>
+                                    <td>
+                                        <button class="mt-2 p-1 btn btn-danger" id="deleteAll">
+                                            Vider le panier
+                                        </button>
+                                    </td>
                                 </tr>`
 
 } else { // Cart is empty
@@ -59,63 +68,149 @@ if (localStorage.getItem('item') !== null) { // Cart is not empty
 
 }
 
+// Actions
+
+    //Delete all products
+    if (localStorage.getItem('item') !== null) {
+
+        document.getElementById("deleteAll").addEventListener('click', function () { 
+        localStorage.clear()
+        document.location.reload()
+        })
+    }
+
+    // Delete or add product
+
+
+    // Quantity
+
+
 // Form
 document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12 needs-validation" novalidate>
                                                 <div class="form-row">
                                                     <div class="col-4">
-                                                        <label for="validationCustom01" class="form-label mb-1">Prénom</label>
-                                                        <input type="text" minlength="3" maxlength="20" class="form-control" id="validationCustom01" placeholder="Prénom" required>
+                                                        <label for="firstName" class="form-label mb-1">Prénom</label>
+                                                        <input type="text" minlength="3" maxlength="20" class="form-control" id="firstName" placeholder="Prénom" required>
                                                         <div class="valid-feedback">Correct!</div>
                                                         <div class="invalid-feedback">Merci d'ajouter votre prénom.</div>
                                                     </div>
                                                     <div class="col-4">
-                                                        <label for="validationCustom02" class="form-label mb-1">Nom</label>
-                                                        <input type="text" minlength="3" maxlength="20" class="form-control" placeholder="Nom" required>
+                                                        <label for="lastName" class="form-label mb-1">Nom</label>
+                                                        <input type="text" minlength="3" maxlength="20" class="form-control" id="lastName" placeholder="Nom" required>
                                                         <div class="valid-feedback">Correct!</div>
                                                         <div class="invalid-feedback">Merci d'ajouter votre nom.</div>
                                                     </div>
                                                     <div class="form-group col-4">
-                                                        <label for="inputEmail" class="mb-1">E-mail</label>
-                                                        <input type="email" minlength="11" maxlength="64" class="form-control" id="inputEmail" placeholder="default@example.com" required>
+                                                        <label for="email" class="mb-1">E-mail</label>
+                                                        <input type="email" minlength="11" maxlength="64" class="form-control" id="email" placeholder="default@example.com" required>
                                                         <div class="valid-feedback">Correct!</div>
                                                         <div class="invalid-feedback">Merci d'ajouter votre e-mail.</div>
                                                 </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="validationCustom03" class="mb-1">Adresse</label>
-                                                    <input type="text" minlength="10" maxlength="64" class="form-control" id="inputAddress" placeholder="12 rue des oursons" required>
+                                                    <label for="adress" class="mb-1">Adresse</label>
+                                                    <input type="text" minlength="10" maxlength="64" class="form-control" id="adress" placeholder="12 rue des oursons" required>
                                                     <div class="valid-feedback">Correct!</div>
                                                     <div class="invalid-feedback">Merci d'ajouter votre adresse.</div>
                                                 </div>
                                                 <div class="form-row">
                                                     <div class="form-group col-2">
-                                                        <label for="inputCity" class="mb-1">Ville</label>
-                                                        <input type="text" minlength="3" maxlength="20" class="form-control" id="inputCity" placeholder="Paris" required>
+                                                        <label for="city" class="mb-1">Ville</label>
+                                                        <input type="text" minlength="3" maxlength="20" class="form-control" id="city" placeholder="Paris" required>
                                                         <div class="valid-feedback">Correct!</div>
                                                         <div class="invalid-feedback">Merci d'ajouter votre ville.</div>
                                                     </div>
                                                     <div class="form-group col-1">
-                                                        <label for="inputZip" class="mb-1">Code Postal</label>
-                                                        <input type="text" class="form-control" pattern="[0-9]{5}" id="inputZip" placeholder="75000" required>
+                                                        <label for="zipCode" class="mb-1">Code Postal</label>
+                                                        <input type="text" class="form-control" pattern="[0-9]{5}" id="zipCode" placeholder="75000" required>
                                                         <div class="valid-feedback">Correct!</div>
                                                         <div class="invalid-feedback">Merci d'ajouter votre code postal.</div>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary">Payer</button>
+                                                <button type="submit" class="btn btn-primary" id="formButton">Valider et payer</button>
                                             </form>`;
 
-// Disabling form submissions if there are invalid fields
-(function () {
-    'use strict' //strict mode
+    // Form validation
+    (function () {
+        'use strict' //strict mode
 
-    let form = document.querySelector('.needs-validation')
-    form.addEventListener('submit', function (event) {
-        
-        if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
+        let form = document.querySelector('.needs-validation')
+        form.addEventListener('submit', function (event) {
+            
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            console.log(form.checkValidity())
+            form.classList.add('was-validated')
+        }, false)
+    })()
+
+    // Retrieve form datas  
+
+    const form = document.getElementById('formButton')
+
+    form.addEventListener('submit', e => {
+
+        e.preventDefault();
+        retrieveFormDatas();
+    })
+
+    function retrieveFormDatas() {
+
+        let formDatas = {
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            email: document.getElementById("email").value,
+            address: document.getElementById("address").value,
+            city: document.getElementById("city").value,
+            zipCode: document.getElementById("zipCode").value
         }
-        console.log(form.checkValidity())
-        form.classList.add('was-validated')
-    }, false)
-})()
+
+        let orderedProducts = []
+
+        if (localStorage.getItem('item') !== null) {
+
+            let productsArray = JSON.parse(localStorage.getItem('item'));
+            
+            productsArray.forEach( p => {
+
+                orderedProducts.push(p._id)
+            })
+        }
+        
+        let order = JSON.stringify({formDatas, orderedProducts})
+
+        postForm(order)
+    }
+
+    // Send form
+
+    function postFrom(order) {
+
+        fetch(`http://localhost:3000/api/teddies/order`, {
+
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            mode:'cors',
+            body: order
+
+        }).then(response => {
+
+            return response.json()
+
+        }).then( response => {
+
+            localStorage.setItem('contact', JSON.stringify(response.formDatas))
+            localStorage.setItem('orderId', JSON.stringify(response.orderId))
+            localStorage.setItem('total', JSON.stringify(total))
+            localStorage.removeItem('item')
+            window.location.replace("../pages/confirmationPage.html")
+        })
+
+        .catch(error => console.log(error))
+    }
