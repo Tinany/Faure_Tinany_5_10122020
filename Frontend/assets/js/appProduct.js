@@ -86,6 +86,9 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                     if (other) cartProducts.push(cart)
                 }
                 localStorage.setItem('item', JSON.stringify(cartProducts))
+
+                // Confirmation
+                alert("Bravo ! Votre article a été ajouté au panier.")
             }
         })
     })
