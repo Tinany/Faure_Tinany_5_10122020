@@ -49,13 +49,16 @@ if (localStorage.getItem('item') !== null) { // Cart is not empty
 
     totalSection.innerHTML += `<tr class="total">
                                     <th scope="row" class="totalText">Total</th>
-                                    <td colspan="4" class="totalPrice">${total}€</td>
+                                    <td colspan="4" class="totalPrice" id="totalPrice">${total}€</td>
                                     <td>
                                         <button class="mt-2 p-1 btn btn-danger" id="deleteAll">
                                             Vider le panier
                                         </button>
                                     </td>
                                 </tr>`
+   
+    // For confirmation page
+    localStorage.setItem("total", JSON.stringify(total))
 
 } else { // Cart is empty
 
@@ -79,10 +82,44 @@ if (localStorage.getItem('item') !== null) { // Cart is not empty
         })
     }
 
-    // Delete or add product
+    // Delete a product
+    if (localStorage.getItem('item') !== null) {
+    document.querySelector('.deleteProduct').addEventListener('click', event => {
+        let productDeleted = []
+        productDeleted = JSON.parse(localStorage.getItem('item'))
+        localStorage.removeItem("item", JSON.stringify(productDeleted))
+        document.location.reload()
+    })
+}
 
+    // Quantity an existing product
 
-    // Quantity
+        // +
+        if (localStorage.getItem('item') !== null) {
+        document.querySelector('.increaseProduct').addEventListener('click', event => {
+            let productIncrease = []
+            productIncrease = JSON.parse(localStorage.getItem('item'))
+            productIncrease[0].productQuantity++
+            localStorage.setItem("item", JSON.stringify(productIncrease))
+            document.location.reload()
+          })
+        }
+
+        // -
+        if (localStorage.getItem('item') !== null) {
+        document.querySelector('.decreaseProduct').addEventListener('click', event => {
+            let productDecrease = []
+            productDecrease = JSON.parse(localStorage.getItem('item'))
+            if(productDecrease[0].productQuantity !== 0) {
+                productDecrease[0].productQuantity--
+                localStorage.setItem("item", JSON.stringify(productDecrease))
+                document.location.reload()
+            }
+            if(productDecrease[0].productQuantity === 0) {
+                localStorage.removeItem("item", JSON.stringify(productDecrease))
+            }
+        })
+    }
 
 
 // Form
@@ -109,7 +146,7 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="adress" class="mb-1">Adresse</label>
-                                                    <input type="text" minlength="10" maxlength="64" class="form-control" id="adress" placeholder="12 rue des oursons" required>
+                                                    <input type="text" minlength="10" maxlength="64" class="form-control" id="address" placeholder="12 rue des oursons" required>
                                                     <div class="valid-feedback">Correct!</div>
                                                     <div class="invalid-feedback">Merci d'ajouter votre adresse.</div>
                                                 </div>
@@ -131,6 +168,7 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
                                             </form>`;
 
     // Form validation
+
     (function () {
         'use strict' //strict mode
 
@@ -143,74 +181,36 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
             }
             console.log(form.checkValidity())
             form.classList.add('was-validated')
+
+            // & Retrieve form datas  
+
+                let contactForm = []
+
+                let contact = {
+        
+                    firstName: document.getElementById("firstName").value,
+                    lastName: document.getElementById("lastName").value,
+                    email: document.getElementById("email").value,
+                    address: document.getElementById("address").value,
+                    city: document.getElementById("city").value,
+                    zipCode: document.getElementById("zipCode").value
+                }
+        
+                contactForm.push(contact)
+                localStorage.setItem("contact", JSON.stringify(contactForm))
+
+                let allProducts = []
+
+                if (localStorage.getItem('item') !== null) {
+                    let productList = JSON.parse(localStorage.getItem('item'))
+                    
+                    productList.forEach( product => {
+                        allProducts.push(product.productId)
+                    })
+                }
+                localStorage.setItem("products", JSON.stringify(allProducts))
         }, false)
     })()
 
-    // Retrieve form datas  
-
-    const form = document.getElementById('formButton')
-
-    form.addEventListener('submit', e => {
-
-        e.preventDefault();
-        retrieveFormDatas();
-    })
-
-    function retrieveFormDatas() {
-
-        let formDatas = {
-            firstName: document.getElementById("firstName").value,
-            lastName: document.getElementById("lastName").value,
-            email: document.getElementById("email").value,
-            address: document.getElementById("address").value,
-            city: document.getElementById("city").value,
-            zipCode: document.getElementById("zipCode").value
-        }
-
-        let orderedProducts = []
-
-        if (localStorage.getItem('item') !== null) {
-
-            let productsArray = JSON.parse(localStorage.getItem('item'));
-            
-            productsArray.forEach( p => {
-
-                orderedProducts.push(p._id)
-            })
-        }
-        
-        let order = JSON.stringify({formDatas, orderedProducts})
-
-        postForm(order)
-    }
-
     // Send form
-
-    function postFrom(order) {
-
-        fetch(`http://localhost:3000/api/teddies/order`, {
-
-            method: 'POST',
-
-            headers: {
-                'Content-Type': 'application/json'
-            },
-
-            mode:'cors',
-            body: order
-
-        }).then(response => {
-
-            return response.json()
-
-        }).then( response => {
-
-            localStorage.setItem('contact', JSON.stringify(response.formDatas))
-            localStorage.setItem('orderId', JSON.stringify(response.orderId))
-            localStorage.setItem('total', JSON.stringify(total))
-            localStorage.removeItem('item')
-            window.location.replace("../pages/confirmationPage.html")
-        })
-
-        .catch(error => console.log(error))
-    }
+    
