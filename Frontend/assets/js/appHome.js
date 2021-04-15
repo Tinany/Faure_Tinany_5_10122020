@@ -30,4 +30,4 @@ fetch('http://localhost:3000/api/teddies') // Retrieving data from the API
                         </div>`
         }
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log(error))
