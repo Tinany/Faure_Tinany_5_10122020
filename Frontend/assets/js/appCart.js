@@ -96,6 +96,7 @@ if (localStorage.getItem('item') !== null) { // Cart is not empty
 
         // +
         if (localStorage.getItem('item') !== null) {
+            
         document.querySelector('.increaseProduct').addEventListener('click', event => {
             let productIncrease = []
             productIncrease = JSON.parse(localStorage.getItem('item'))
@@ -209,8 +210,29 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
                     })
                 }
                 localStorage.setItem("products", JSON.stringify(allProducts))
+                
+                // & Send form
+                  const order = {
+                    contact: contactForm,
+                    products: allProducts
+                  }
+                
+                  const requestOptions = {
+                    method: 'POST',
+                    body: localStorage.setItem("order",JSON.stringify(order)),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                  }
+                
+                  fetch(`http://localhost:3000/api/teddies/order`, requestOptions)
+
+                    .then((response) => response.json())
+
+                    .then((json) => {
+
+                      window.location.replace("../pages/confirmationPage.html")
+                    })
+                    .catch(() => {
+                      alert(error)
+                    })
         }, false)
     })()
-
-    // Send form
-    
