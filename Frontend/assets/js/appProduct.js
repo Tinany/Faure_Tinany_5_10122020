@@ -1,4 +1,4 @@
-const searchParams = new URLSearchParams(window.location.search)
+const searchParams = new URLSearchParams(window.location.search) // constructor creates and returns a new URLSearchParams (location) object
 const productId = searchParams.get("ourson")
 
 fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from the API with product ID
@@ -7,7 +7,7 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
             return response.json() // Use the json() method to return the response as a JSON object
         }
         else {
-            throw new Error("Message d'erreur")
+            throw new Error("Message d'erreur") //throw an error if the call doesn't resolve
         }
     })
     .then(response => {
@@ -92,4 +92,5 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
             }
         })
     })
+    // fetch operation error
     .catch(error => console.log(error))

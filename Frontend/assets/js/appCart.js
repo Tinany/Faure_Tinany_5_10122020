@@ -19,13 +19,13 @@ createTable.innerHTML += `<table class="mt-4 mb-4 table table-hover">
 
 if (localStorage.getItem('item') !== null) { // Cart is not empty
 
-    let addProduct = JSON.parse(localStorage.getItem('item')) // Retrieve data
-    let total = 0
+    let addProduct = JSON.parse(localStorage.getItem('item')) // Retrieve datas
+    let total = 0     // set the total
 
     addProduct.forEach((product) => {
 
         let totalProduct = parseFloat(product.productPrice) * product.productQuantity
-        total += totalProduct
+        total += totalProduct // total calculation
 
         document.getElementById("products-detail").innerHTML += `<tr>
                                                                     <td><img class ="imgForCart" src="${product.productImage}" alt="Photo d'un ours en peluche"></td>
@@ -213,26 +213,32 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
                 
                 // & Send form
                   const order = {
+
                     contact: contactForm,
                     products: allProducts
                   }
-                
+
                   const requestOptions = {
+
                     method: 'POST',
-                    body: localStorage.setItem("order",JSON.stringify(order)),
-                    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                    body: JSON.stringify(order)
                   }
                 
                   fetch(`http://localhost:3000/api/teddies/order`, requestOptions)
 
-                    .then((response) => response.json())
+                    .then((response) => { 
+                    
+                    return response.json()
+                })
 
-                    .then((json) => {
+                    .then((response) => {
 
+                      let orderId = JSON.stringify(response.orderId)
+                      localStorage.setItem("orderId", orderId)
                       window.location.replace("../pages/confirmationPage.html")
                     })
-                    .catch(() => {
-                      alert(error)
-                    })
+                    
+                // fetch operation error
+                .catch(error => console.log(error))
         }, false)
     })()
