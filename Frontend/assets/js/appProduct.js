@@ -61,7 +61,7 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                     productName: response.name,
                     productColor: response.colorChose,
                     productPrice: (response.price / 100).toFixed(2).replace(".", ","),
-                    productQuantity: 1
+                    productQuantity: 1,
                 }
 
                 // Create a bolean variable
@@ -84,6 +84,7 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                         }
                     })
                     if (other) cartProducts.push(cart)
+                    
                 }
                 localStorage.setItem('item', JSON.stringify(cartProducts))
 

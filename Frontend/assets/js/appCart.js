@@ -1,7 +1,8 @@
 // Cart
-let createTable = document.getElementById("cart") // Create the table
-let some = JSON.parse(localStorage.getItem('item'))
+let createTable = document.getElementById("cart") // ID recovery to create the cart
+let productsObject = JSON.parse(localStorage.getItem('item')) // Get & parse products in localstorage
 
+// Table header
 createTable.innerHTML += `<table class="mt-4 mb-4 table table-hover table-sm">
                                             <thead>
                                                 <tr>
@@ -19,18 +20,19 @@ createTable.innerHTML += `<table class="mt-4 mb-4 table table-hover table-sm">
                                             <tfoot id="total"></tfoot>
                                           </table>`
 
-if (localStorage.getItem('item') !== null && some.length > 0) { // Cart is not empty
+// If the cart is not empty
+if (localStorage.getItem('item') !== null && productsObject.length > 0) { 
 
-    let addProduct = JSON.parse(localStorage.getItem('item')) // Retrieve datas
-    let total = 0     // set the total
+    let total = 0  // set the total
     let index = -1 // set the index
 
-    addProduct.forEach((product) => {
+    productsObject.forEach((product) => {
 
-        let totalProduct = parseFloat(product.productPrice) * product.productQuantity
+        let totalProduct = parseFloat(product.productPrice) * product.productQuantity // total of same products
         total += totalProduct // total calculation
-        index++
+        index++ // increase index
 
+        // Table body
         document.getElementById("products-detail").innerHTML += `<tr>
                                                                     <td class="align-middle index">${index}</td>
                                                                     <td><img class ="align-middle imgForCart" src="${product.productImage}" alt="Photo d'un ours en peluche"></td>
@@ -50,7 +52,8 @@ if (localStorage.getItem('item') !== null && some.length > 0) { // Cart is not e
                                                                   </tr>`
     })
 
-    let totalSection = document.getElementById("total") // Total
+    // Table footer
+    let totalSection = document.getElementById("total") // ID recovery to create the table footer
 
     totalSection.innerHTML += `<tr class="total">
                                     <th scope="row" class="totalText align-middle">Total</th>
@@ -62,82 +65,82 @@ if (localStorage.getItem('item') !== null && some.length > 0) { // Cart is not e
                                     </td>
                                 </tr>`
 
-    // For confirmation page
+    // For confirmation page, set total in the localStorage
     localStorage.setItem("total", JSON.stringify(total))
 
 // Actions
 
-//Delete all products
-    document.getElementById("deleteAll").addEventListener('click', function () {
-        localStorage.clear()
+    //Delete all products 
+        document.getElementById("deleteAll").addEventListener('click', function () { // Get & listen click on deleteAll button
+            localStorage.clear() // remove all items in localStorage
+            document.location.reload() // reload window
+        })
 
-    })
+    // Delete one products
 
-// Delete one product
-let wichButtons = document.querySelectorAll('.deleteProduct')
-for (i of wichButtons) {
+    let wichDeleteBtn = document.querySelectorAll('.deleteProduct') // Get all deleteProduct buttons
 
-    let wichProduct = JSON.parse(localStorage.getItem('item'))
+    for (deleteBtn of wichDeleteBtn) { // For all deleteProduct buttons :
 
-    i.addEventListener('click', function () {
-        let getTheLign = this.parentNode.parentNode
-        let getIndex = getTheLign.firstElementChild
-        let wichIndex = getIndex.innerText
-
-        let indexProduct = wichProduct[wichIndex]
-            wichProduct.splice(indexProduct, 1)
-            localStorage.setItem('item', JSON.stringify(wichProduct))
-            document.location.reload()
-    })
-}
+        deleteBtn.addEventListener('click', function () { // Listen the click event
+            let getTheLign = this.parentNode.parentNode // Recover the parent block (table line)
+            let getIndex = getTheLign.firstElementChild // Recover the first child of the parent block (index)
+            let wichIndex = getIndex.innerText // Retrieve the content value (index number)
+            productsObject.splice(wichIndex, 1) // Remove the selected item from the localStorage
+            reload(this) // Reload the window
+        })
+    }
 
 // Quantity an existing product
 
-// +
+    // Increase Product
 
-let wichPlus = document.querySelectorAll('.increaseProduct')
-for (i of wichPlus) {
+    let wichPlus = document.querySelectorAll('.increaseProduct') // Get all increaseProduct buttons
 
-    let wichProduct = JSON.parse(localStorage.getItem('item'))
+    for (plus of wichPlus) { // For all increaseProduct buttons :
 
-    i.addEventListener('click', function () {
-        let getTheLign = this.parentNode.parentNode
-        let getIndex = getTheLign.firstElementChild
-        let wichIndex = getIndex.innerText
+        plus.addEventListener('click', function () { // Listen the click event
 
-        let indexProduct = wichProduct[wichIndex]
-            indexProduct.productQuantity++
-            localStorage.setItem('item', JSON.stringify(wichProduct))
+            let getTheLign = this.parentNode.parentNode // Recover the parent block (table line)
+            let getIndex = getTheLign.firstElementChild // Recover the first child of the parent block (index)
+            let wichIndex = getIndex.innerText // Retrieve the content value (index number)
+
+            let indexProduct = productsObject[wichIndex] // Select the object in the array
+            indexProduct.productQuantity++ // Increase quantity
+            reload(this) // Reload the window
+        })
+    }
+
+// Decrease Product
+
+    let wichManus = document.querySelectorAll('.decreaseProduct') // get button -
+
+    for (manus of wichManus) { // for all buttons -
+
+        manus.addEventListener('click', function () { // Listen the click event
+
+            let getTheLign = this.parentNode.parentNode // Recover the parent block (table line)
+            let getIndex = getTheLign.firstElementChild // Recover the first child of the parent block (index)
+            let wichIndex = getIndex.innerText // Retrieve the content value (index number)
+
+            let indexProduct = productsObject[wichIndex] // Select the object in the array
+
+            if(indexProduct.productQuantity > 1){ // Above 0
+                indexProduct.productQuantity-- // Decrease quantity
+            }
+            else{ 
+                productsObject.splice(wichIndex, 1) // Remove the selected item from the localStorage
+            }
+            reload(this) // Reload the window
+        })
+    }
+
+    // Reload function
+    function reload(){
+
+            localStorage.setItem('item', JSON.stringify(productsObject))
             document.location.reload()
-    })
-}
-
-
-// -
-
-let wichManus = document.querySelectorAll('.decreaseProduct')
-for (i of wichManus) {
-
-    let wichProduct = JSON.parse(localStorage.getItem('item'))
-
-    i.addEventListener('click', function () {
-        let getTheLign = this.parentNode.parentNode
-        let getIndex = getTheLign.firstElementChild
-        let wichIndex = getIndex.innerText
-
-        let indexProduct = wichProduct[wichIndex]
-        
-        if (indexProduct.productQuantity > 1) {
-            indexProduct.productQuantity--
-            localStorage.setItem('item', JSON.stringify(wichProduct))
-        }
-        else {
-            wichProduct.splice(indexProduct, 1)
-            localStorage.setItem('item', JSON.stringify(wichProduct))
-        }
-        document.location.reload()
-    })
-}
+    }
 
 } else { // Cart is empty
 
@@ -148,7 +151,9 @@ for (i of wichManus) {
 
 }
 
-// Form
+
+// Form with bootstrap class validation
+
 document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12 needs-validation" novalidate>
                                                 <div class="form-row">
                                                     <div class="col-4 mb-2">
