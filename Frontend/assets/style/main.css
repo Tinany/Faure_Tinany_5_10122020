@@ -60,8 +60,10 @@
     transform: scale(0.91);
 }
 /*ProductPage*/
+@media (min-width: 769px){
 .card-product {
     width: 50rem;
+    }
 }
 .card-img-top-product {
     width: 100%;
@@ -81,11 +83,16 @@
     transform: scale(1.07);
 }
 /*Cart*/
+@media (max-width: 768px) {
+.table{
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+    
+}
 .imgForCart {
     width: 120px;
-}
-.totalText, .totalPrice {
-    padding-top: 30px!important;
 }
 .totalPrice {
     font-weight: 700;
