@@ -4,8 +4,7 @@ const orderId = localStorage.getItem('orderId') // Get orderId
 
 // HTML semantics creation with the localStorage elements and add new elements in HTML document
 document.getElementById('confirmation').innerHTML +=
-                                                    `<h2 class="mt-5 mb-5 display-4 text-center font-weight-bold">Confirmation de votre commande</h2>
-                                                    <ul class="list-group ml-3 mr-3 mt-5 mb-5">
+                                                    `<ul class="list-group ml-3 mr-3 mt-5 mb-5">
                                                         <li class="list-group-item active">Numéro de commande : ${orderId}</li>  
                                                         <li class="list-group-item"><strong>Nom :</strong> ${contact.firstName}</li>
                                                         <li class="list-group-item"><strong>Prénom :</strong> ${contact.lastName}</li>
