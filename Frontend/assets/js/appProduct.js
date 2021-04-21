@@ -1,5 +1,5 @@
 const searchParams = new URLSearchParams(window.location.search) // constructor creates and returns a new URLSearchParams (location) object
-const productId = searchParams.get("ourson")
+const productId = searchParams.get("ourson") //
 
 fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from the API with product ID
     .then((response) => {
@@ -36,25 +36,26 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
         //Creating a foreach function 
         let colorsChoices = document.querySelector(".choose")
 
-        response.colors.forEach(function (colors) {
+        response.colors.forEach(function (colors) { //
 
-            let option = document.createElement("option")
+            let option = document.createElement("option") //
             option.value = colors; //Add option value=""
             option.textContent = colors; //Add text inside option tag
-            colorsChoices.appendChild(option)
+            colorsChoices.appendChild(option) //
         })
 
 
         // Color choice for localStorage
-        document.getElementById("cartButton").addEventListener('click', function () {
-                let select = document.querySelector(".choose")
-                response.colorChose = select.options[select.selectedIndex].value
+        document.getElementById("cartButton").addEventListener('click', function () { //
+                let select = document.querySelector(".choose") //
+                response.colorChose = select.options[select.selectedIndex].value //
 
                 // Create an array
                 let cartProducts = []
 
             // Add product data for localStorage
             if (typeof localStorage != 'undefined' && JSON) {
+                
                 let cart = {
                     productImage: response.imageUrl,
                     productId: response._id,
