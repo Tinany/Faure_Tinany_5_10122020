@@ -145,9 +145,9 @@ if (localStorage.getItem('item') !== null && productsObject.length > 0) {
 } else { // Cart is empty
 
         localStorage.clear()
-        document.getElementById("products-detail").innerHTML += `<tr>
-                                                                    <td colspan="5">Votre panier est vide !</td>
-                                                                 </tr>`
+        createTable.innerHTML += `<div class="mb-5">
+                                    <p class="text-center h4 text-primary">Votre panier est vide !</p>
+                                  <div>`
 
 }
 
@@ -203,20 +203,21 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
 (function () {
     'use strict' //strict mode
 
-    let form = document.querySelector('.needs-validation')
-    form.addEventListener('submit', function (event) {
+    let form = document.querySelector('.needs-validation') //Recover the query selector of the form
 
-        event.preventDefault()
-        event.stopPropagation()
+    form.addEventListener('submit', function (event) { // Listen submit event
 
-        if (!form.checkValidity()) {
-            form.classList.add('was-validated')
+        event.preventDefault() //
+        event.stopPropagation() //
+
+        if (!form.checkValidity()) { //
+            form.classList.add('was-validated') //
         }
         else {
-        console.log(form.checkValidity())
+        console.log(form.checkValidity()) //
 
-        // & Retrieve form datas  
-
+        // & Retrieve form datas, create the contact object
+            if(localStorage.getItem('item') !== null){
         let contact = {
 
             firstName: document.getElementById("firstName").value,
@@ -227,31 +228,30 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
             zipCode: document.getElementById("zipCode").value
         }
 
-        localStorage.setItem("contact", JSON.stringify(contact))
+        localStorage.setItem("contact", JSON.stringify(contact)) // Set conctact in localStorage
 
-        let allProducts = []
+        let allProducts = [] // Create product array
 
-            let productList = JSON.parse(localStorage.getItem('item'))
-
-            productList.forEach(product => {
-                allProducts.push(product.productId)
+            productsObject.forEach(product => { // For each selected products
+                allProducts.push(product.productId) // Recover id
             })
 
         // & Send form
-        const order = {
+
+        const order = { // create order object
 
             contact: contact,
             products: allProducts
         }
 
-        const request = {
+        const request = { // create fetch request options
 
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(order)
+            headers: { "Content-Type": "application/json" }, //
+            body: JSON.stringify(order) //
         }
 
-        fetch(`http://localhost:3000/api/teddies/order`, request)
+        fetch(`http://localhost:3000/api/teddies/order`, request) // 
 
             .then((response) => {
 
@@ -259,14 +259,16 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
             })
 
             .then((response) => {
-
-                let orderId = response.orderId
-                localStorage.setItem("orderId", orderId)
-                window.location.replace("../pages/confirmationPage.html") 
+ 
+                let orderId = response.orderId //
+                localStorage.setItem("orderId", orderId) //
+                window.location.replace("../pages/confirmationPage.html") // Replace on confirmation page
             })
 
             // fetch operation error
             .catch(error => console.log(error))
+        } else {
+            alert('Votre panier est vide ! Sélectionner au moins un produit pour commander')
         }
-    }, false)
+    }}, false)
 })()
