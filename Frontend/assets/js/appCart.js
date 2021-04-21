@@ -138,12 +138,13 @@ if (localStorage.getItem('item') !== null && productsObject.length > 0) {
     // Reload function
     function reload(){
 
-            localStorage.setItem('item', JSON.stringify(productsObject))
-            document.location.reload()
+            localStorage.setItem('item', JSON.stringify(productsObject)) // Set item in localstorage
+            document.location.reload() // Reload the window
     }
 
 } else { // Cart is empty
 
+        // Clear localstroage & add a text for an empty cart
         localStorage.clear()
         createTable.innerHTML += `<div class="mb-5">
                                     <p class="text-center h4 text-primary">Votre panier est vide !</p>
@@ -207,66 +208,69 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
 
     form.addEventListener('submit', function (event) { // Listen submit event
 
-        event.preventDefault() //
-        event.stopPropagation() //
+        event.preventDefault() //If the event doesn't get handled, its default action shouldn't be taken
+        event.stopPropagation() // Prevents the current event from spreading further 
 
-        if (!form.checkValidity()) { //
-            form.classList.add('was-validated') //
+        if (!form.checkValidity()) { // Checks whether the element has any constraints and whether it satisfies them
+            form.classList.add('was-validated') // Change the class on the form
         }
         else {
-        console.log(form.checkValidity()) //
+        console.log(form.checkValidity())
+        alert('Erreur lors de validation du formulaire')
 
-        // & Retrieve form datas, create the contact object
-            if(localStorage.getItem('item') !== null){
-        let contact = {
+        // & Retrieve form datas if the localstorage isn't empty
 
-            firstName: document.getElementById("firstName").value,
-            lastName: document.getElementById("lastName").value,
-            email: document.getElementById("email").value,
-            address: document.getElementById("address").value,
-            city: document.getElementById("city").value,
-            zipCode: document.getElementById("zipCode").value
-        }
+        if(localStorage.getItem('item') !== null){
+        
+            let contact = { // Create the contact object
 
-        localStorage.setItem("contact", JSON.stringify(contact)) // Set conctact in localStorage
+                firstName: document.getElementById("firstName").value,
+                lastName: document.getElementById("lastName").value,
+                email: document.getElementById("email").value,
+                address: document.getElementById("address").value,
+                city: document.getElementById("city").value,
+                zipCode: document.getElementById("zipCode").value
+            }
 
-        let allProducts = [] // Create product array
+            localStorage.setItem("contact", JSON.stringify(contact)) // Set conctact in localStorage
 
-            productsObject.forEach(product => { // For each selected products
-                allProducts.push(product.productId) // Recover id
-            })
+            let allProducts = [] // Create product array
 
-        // & Send form
+                productsObject.forEach(product => { // For each selected products
+                    allProducts.push(product.productId) // Recover id
+                })
 
-        const order = { // create order object
+            // & Send form
 
-            contact: contact,
-            products: allProducts
-        }
+            const order = { // Create order object
 
-        const request = { // create fetch request options
+                contact: contact,
+                products: allProducts
+            }
 
-            method: 'POST',
-            headers: { "Content-Type": "application/json" }, //
-            body: JSON.stringify(order) //
-        }
+            const request = { // Create fetch request options
 
-        fetch(`http://localhost:3000/api/teddies/order`, request) // 
+                method: 'POST',
+                headers: { "Content-Type": "application/json" }, //Creation of the header
+                body: JSON.stringify(order) //Implements & defines the following methods to extract the body
+            }
 
-            .then((response) => {
+            fetch(`http://localhost:3000/api/teddies/order`, request) // Retrieving data from the API
 
-                return response.json()
-            })
+                .then((response) => {
 
-            .then((response) => {
- 
-                let orderId = response.orderId //
-                localStorage.setItem("orderId", orderId) //
-                window.location.replace("../pages/confirmationPage.html") // Replace on confirmation page
-            })
+                    return response.json()
+                })
 
-            // fetch operation error
-            .catch(error => console.log(error))
+                .then((response) => {
+    
+                    let orderId = response.orderId // Retrieve & set the order id
+                    localStorage.setItem("orderId", orderId) // Stock in the localStorage the order id
+                    window.location.replace("../pages/confirmationPage.html") // Replace on confirmation page
+                })
+
+                // fetch operation error
+                .catch(error => console.log(error))
         } else {
             alert('Votre panier est vide ! Sélectionner au moins un produit pour commander')
         }

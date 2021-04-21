@@ -16,8 +16,3 @@ document.getElementById('confirmation').innerHTML +=
                                                         <li class="list-group-item text-white bg-danger"><strong>Prix total :</strong> ${(total).toFixed(2).replace(".",",")} €</li>
                                                     </ul>`
 localStorage.clear() //Clear localStorage
-
-if(localStorage.getItem('item') === null){
-        let emptyFooterContainer = document.getElementById('footerContainer')
-        emptyFooterContainer.classList.add("footerContainer")
-    }

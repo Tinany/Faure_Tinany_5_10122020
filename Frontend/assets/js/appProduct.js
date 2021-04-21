@@ -1,5 +1,5 @@
-const searchParams = new URLSearchParams(window.location.search) // constructor creates and returns a new URLSearchParams (location) object
-const productId = searchParams.get("ourson") //
+const searchParams = new URLSearchParams(window.location.search) // Constructor creates and returns a new URLSearchParams (location) object
+const productId = searchParams.get("ourson") // Get the product with response id 
 
 fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from the API with product ID
     .then((response) => {
@@ -34,21 +34,22 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
 
 
         //Creating a foreach function 
+
         let colorsChoices = document.querySelector(".choose")
 
         response.colors.forEach(function (colors) { //
 
-            let option = document.createElement("option") //
+            let option = document.createElement("option") // Create option element for select button
             option.value = colors; //Add option value=""
             option.textContent = colors; //Add text inside option tag
-            colorsChoices.appendChild(option) //
+            colorsChoices.appendChild(option) // Append in html 
         })
 
 
         // Color choice for localStorage
-        document.getElementById("cartButton").addEventListener('click', function () { //
-                let select = document.querySelector(".choose") //
-                response.colorChose = select.options[select.selectedIndex].value //
+        document.getElementById("cartButton").addEventListener('click', function () { // Click event on button to add in cart
+                let select = document.querySelector(".choose") // Get the button to choose the color
+                response.colorChose = select.options[select.selectedIndex].value // Add the option...
 
                 // Create an array
                 let cartProducts = []
@@ -60,7 +61,7 @@ fetch(`http://localhost:3000/api/teddies/${productId}`) // Retrieving data from 
                     productImage: response.imageUrl,
                     productId: response._id,
                     productName: response.name,
-                    productColor: response.colorChose,
+                    productColor: response.colorChose, // ...& Take in
                     productPrice: (response.price / 100).toFixed(2).replace(".", ","),
                     productQuantity: 1,
                 }
