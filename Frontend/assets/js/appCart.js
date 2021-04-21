@@ -199,7 +199,7 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
                                                 <button type="submit" class="btn btn-primary" id="formButton">Valider et payer</button>
                                             </form>`;
 
-// Form validation
+// Form validation on submit
 
 (function () {
     'use strict' //strict mode
@@ -216,7 +216,7 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
         }
         else {
         console.log(form.checkValidity())
-        alert('Erreur lors de validation du formulaire')
+        alert('Merci pour votre commande !')
 
         // & Retrieve form datas if the localstorage isn't empty
 
