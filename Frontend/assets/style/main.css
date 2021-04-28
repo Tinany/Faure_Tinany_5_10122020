@@ -84,12 +84,11 @@
 }
 /*Cart*/
 @media (max-width: 768px) {
-.table{
+.table {
     display: flex;
     flex-direction: column;
     overflow: scroll;
-}
-    
+    } 
 }
 .imgForCart {
     width: 120px;
@@ -100,4 +99,13 @@
 .table {
     border-collapse: separate;
     border-spacing:0 20px;
+}
+/*Confirmation*/
+#confirmBody {
+    min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+#confirmMain {
+    flex-grow:1;
 }
