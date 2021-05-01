@@ -66,15 +66,14 @@ function addInCart(response) {
                 let cartProducts = []
 
             // Add product data for localStorage
-            if (typeof localStorage != 'undefined' && JSON) {
-                
+
                 let cart = {
                     productImage: response.imageUrl,
                     productId: response._id,
                     productName: response.name,
                     productColor: response.colorChose, // ...& Take in
                     productPrice: (response.price / 100).toFixed(2).replace(".", ","),
-                    productQuantity: 1,
+                    productQuantity: 1
                 }
 
                 // Create a bolean variable
@@ -103,6 +102,5 @@ function addInCart(response) {
 
                 // Confirmation
                 alert("Bravo ! Votre article a été ajouté au panier.")
-            }
         })
 }
