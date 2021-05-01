@@ -179,13 +179,13 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
                                                     <div class="form-row">
                                                         <div class="col-4 mb-2">
                                                             <label for="firstName" class="form-label mb-1">Prénom</label>
-                                                            <input type="text" minlength="3" maxlength="20" class="form-control" id="firstName" placeholder="Prénom" required>
+                                                            <input type="text" minlength="3" maxlength="20" pattern="[a-zA-Z\s]+" class="form-control" id="firstName" placeholder="Prénom" required>
                                                             <div class="valid-feedback">Correct!</div>
                                                             <div class="invalid-feedback">Merci d'ajouter votre prénom.</div>
                                                         </div>
                                                         <div class="col-4 mb-2">
                                                             <label for="lastName" class="form-label mb-1">Nom</label>
-                                                            <input type="text" minlength="3" maxlength="20" class="form-control" id="lastName" placeholder="Nom" required>
+                                                            <input type="text" minlength="3" maxlength="20" pattern="[a-zA-Z\s]+" class="form-control" id="lastName" placeholder="Nom" required>
                                                             <div class="valid-feedback">Correct!</div>
                                                             <div class="invalid-feedback">Merci d'ajouter votre nom.</div>
                                                         </div>
@@ -205,7 +205,7 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
                                                     <div class="form-row">
                                                         <div class="form-group col-lg-2">
                                                             <label for="city" class="mb-1">Ville</label>
-                                                            <input type="text" minlength="3" maxlength="20" class="form-control" id="city" placeholder="Paris" required>
+                                                            <input type="text" minlength="3" maxlength="20" pattern="[a-zA-Z\s]+" class="form-control" id="city" placeholder="Paris" required>
                                                             <div class="valid-feedback">Correct!</div>
                                                             <div class="invalid-feedback">Merci d'ajouter votre ville.</div>
                                                         </div>
