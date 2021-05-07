@@ -6,6 +6,11 @@
 **Mockup by :** Openclassrooms
 ## Objectif : Construisez un site e-commerce </br>
 
+### Connexion au backend via node.js : </br>
+
+- Ouvrir le terminal et se positionner sur le dossier nommé backend 
+- Démarrer node server.js
+
 ### A faire : </br>
 
 - 4 pages : </br>
