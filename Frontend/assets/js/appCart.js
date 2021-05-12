@@ -175,6 +175,8 @@ if (localStorage.getItem('item') !== null && productsObject.length > 0) {
 }
 
 // Form with bootstrap class validation
+formCreation()
+function formCreation() {
 document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12 needs-validation" novalidate>
                                                     <div class="form-row">
                                                         <div class="col-4 mb-2">
@@ -218,18 +220,21 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
                                                     </div>
                                                     <button type="submit" class="btn btn-primary" id="formButton">Valider et payer</button>
                                                 </form>`;
-
+}
 // Form validation
-(function () {
+formValidation()
+function formValidation () {
     'use strict' //strict mode
 
     let form = document.querySelector('.needs-validation') //Recover the query selector of the form
 
-    form.addEventListener('submit', function (event) { // Listen submit event
+    form.addEventListener('submit', function formSubmit(event) { // Listen submit event
 
         event.preventDefault() //If the event doesn't get handled, its default action shouldn't be taken
         event.stopPropagation() // Prevents the current event from spreading further 
 
+        checkFormValidity()
+        function checkFormValidity(){
         if (!form.checkValidity()) { // Checks whether the element has any constraints and whether it satisfies them
             form.classList.add('was-validated') // Change the class on the form
         }
@@ -237,6 +242,8 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
         console.log(form.checkValidity())
 
         // & Retrieve form datas if the localstorage isn't empty
+        sendOrder()
+        function sendOrder(){
         if(localStorage.getItem('item') !== null){
         
             let contact = { // Create the contact object
@@ -291,6 +298,6 @@ document.getElementById("form").innerHTML += `<form id="form" class="mb-4 col-12
         } else {
             alert('Votre panier est vide ! Sélectionner au moins un produit pour commander')
             }
-        }
-    }, false)
-})()
+        }}
+    }}, false)
+}
