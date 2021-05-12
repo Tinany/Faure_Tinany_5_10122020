@@ -24,3 +24,8 @@ Vous pouvez trouver <a href="https://s3-eu-west-1.amazonaws.com/course.oc-static
 Être en mesure de cloner le référentiel, d'ouvrir index.html, d'utiliser l'application entièrement opérationnelle <br>
 et de confirmer que n’importe quel input utilisateur est validé.
 -  Un plan de tests
+
+
+### Important
+
+Le site a été remasterisé après la soutenance afin d'améliorer la maintenabilité du code et faciliter la gestion du plan de test. 
